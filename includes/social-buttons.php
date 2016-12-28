@@ -1,17 +1,5 @@
 <?php
 
-$post_url = get_the_permalink();
-$post_title = get_the_title();
-$buttons = get_option( 'ultralight_buttons' );
-$position = get_option( 'ultralight_position' );
-
-
-if ( isset( $buttons ) && ! empty( $buttons ) && is_array( $buttons ) ) {
-	foreach ( $buttons as $button ) {
-		$content .= ultralight_display_buttons( $button, $post_url, $post_title );
-	}
-}
-
 function ultralight_display_buttons( $button, $post_url, $post_title  ) {
 	switch ( $button ) {
 		case 'facebook' :

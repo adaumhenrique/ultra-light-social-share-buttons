@@ -32,17 +32,17 @@ function ultralight_options_page() {
 }
 
 function ultralight_setup_sections() {
-	add_settings_section( 'ultralight_display', 'Display Position', 'ultralight_section_callback', 'ultralight_fields' );
-	add_settings_section( 'ultralight_buttons', 'Disable / Enable Social Buttons', 'ultralight_section_callback', 'ultralight_fields' );
+	add_settings_section( 'ultralight_display_section', 'Display Position', 'ultralight_section_callback', 'ultralight_fields' );
+	add_settings_section( 'ultralight_buttons_section', 'Disable / Enable Social Buttons', 'ultralight_section_callback', 'ultralight_fields' );
 }
 add_action( 'admin_init', 'ultralight_setup_sections' );
 
 function ultralight_section_callback( $arguments ) {
 	switch( $arguments['id'] ){
-		case 'ultralight_display':
+		case 'ultralight_display_section':
 			esc_attr_e( 'Choose in which place of the blog post you want to display the social share buttons', 'wp_admin_style' );
 			break;
-		case 'ultralight_buttons':
+		case 'ultralight_buttons_section':
 			echo 'Choose which social share buttons you want to display on your blog posts';
 			break;
 	}
@@ -53,7 +53,7 @@ function ultralight_setup_fields() {
 		array(
 			'uid' => 'ultralight_position',
 			'label' => 'Buttons Position',
-			'section' => 'ultralight_display',
+			'section' => 'ultralight_display_section',
 			'type' => 'radio',
 			'options' => array(
 				'top' => 'Top',
@@ -65,7 +65,7 @@ function ultralight_setup_fields() {
 		array(
 			'uid' => 'ultralight_buttons',
 			'label' => 'Social Buttons',
-			'section' => 'ultralight_buttons',
+			'section' => 'ultralight_buttons_section',
 			'type' => 'checkbox',
 			'options' => array(
 				'facebook' => 'Facebook',
@@ -127,8 +127,19 @@ register_activation_hook( __FILE__, 'ultralight_set_defaults' );
 function ultralight_show_buttons_post( $post ) {
 	global $content;
 
-	if ( is_single() ) {
-		require( 'includes/social-buttons.php' );
+	$buttons = get_option( 'ultralight_buttons' );
+
+	if ( isset( $buttons ) && ! empty( $buttons ) && is_array( $buttons ) ) {
+
+		$post_url = get_the_permalink();
+		$post_title = get_the_title();
+
+		if ( is_single() ) {
+			require( 'includes/social-buttons.php' );
+			foreach ( $buttons as $button ) {
+				$content .= ultralight_display_buttons( $button, $post_url, $post_title );
+			}
+		}
 	}
 
 	$position = get_option( 'ultralight_position' );
