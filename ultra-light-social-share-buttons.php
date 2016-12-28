@@ -6,7 +6,8 @@
  * Version: 1.0
  * Author: Adam Silva
  * Author URI: http://www.f5themes.com
- * License GPLv3
+ * License GPLv2 or Later
+ * License URI: https://www.gnu.org/licenses/gpl-2.0.html
  */
 
 
