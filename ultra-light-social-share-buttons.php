@@ -28,7 +28,7 @@ function ultralight_options_page() {
 		wp_die( 'You do not have sufficiente permissions to access this page.' );
 	}
 
-	require( 'includes/options-page-wrapper.php' );
+	require_once( 'includes/options-page-wrapper.php' );
 }
 
 function ultralight_setup_sections() {
@@ -135,7 +135,7 @@ function ultralight_show_buttons_post( $post ) {
 		$post_title = get_the_title();
 
 		if ( is_single() ) {
-			require( 'includes/social-buttons.php' );
+			require_once( 'includes/social-buttons.php' );
 			foreach ( $buttons as $button ) {
 				$content .= ultralight_display_buttons( $button, $post_url, $post_title );
 			}
