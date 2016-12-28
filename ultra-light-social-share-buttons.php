@@ -25,25 +25,25 @@ add_action( 'admin_menu', 'ultralight_menu' );
 
 function ultralight_options_page() {
 	if ( ! current_user_can( 'manage_options' ) ) {
-		wp_die( 'You do not have sufficiente permissions to access this page.' );
+		wp_die( esc_attr__( 'You do not have sufficiente permissions to access this page.', 'wp_admin_style' ) );
 	}
 
 	require_once( 'includes/options-page-wrapper.php' );
 }
 
 function ultralight_setup_sections() {
-	add_settings_section( 'ultralight_display_section', 'Display Position', 'ultralight_section_callback', 'ultralight_fields' );
-	add_settings_section( 'ultralight_buttons_section', 'Disable / Enable Social Buttons', 'ultralight_section_callback', 'ultralight_fields' );
+	add_settings_section( 'ultralight_display_section', __( 'Display Position', 'wp_admin_style' ), 'ultralight_section_callback', 'ultralight_fields' );
+	add_settings_section( 'ultralight_buttons_section', __( 'Disable / Enable Social Buttons', 'wp_admin_style' ), 'ultralight_section_callback', 'ultralight_fields' );
 }
 add_action( 'admin_init', 'ultralight_setup_sections' );
 
 function ultralight_section_callback( $arguments ) {
-	switch( $arguments['id'] ){
+	switch ( $arguments['id'] ) {
 		case 'ultralight_display_section':
 			esc_attr_e( 'Choose in which place of the blog post you want to display the social share buttons', 'wp_admin_style' );
 			break;
 		case 'ultralight_buttons_section':
-			echo 'Choose which social share buttons you want to display on your blog posts';
+			esc_attr_e( 'Choose which social share buttons you want to display on your blog posts', 'wp_admin_style' );
 			break;
 	}
 }
@@ -52,34 +52,34 @@ function ultralight_setup_fields() {
 	$fields = array(
 		array(
 			'uid' => 'ultralight_position',
-			'label' => 'Buttons Position',
+			'label' => __( 'Buttons Position', 'wp_admin_style' ),
 			'section' => 'ultralight_display_section',
 			'type' => 'radio',
 			'options' => array(
-				'top' => 'Top',
-				'bot' => 'Bottom',
-				'both' => 'Both',
+				'top' => __( 'Top', 'wp_admin_style' ),
+				'bot' => __( 'Bottom', 'wp_admin_style' ),
+				'both' => __( 'Both', 'wp_admin_style' ),
 			),
 			'default' => array(),
 		),
 		array(
 			'uid' => 'ultralight_buttons',
-			'label' => 'Social Buttons',
+			'label' => __( 'Social Buttons', 'wp_admin_style' ),
 			'section' => 'ultralight_buttons_section',
 			'type' => 'checkbox',
 			'options' => array(
-				'facebook' => 'Facebook',
-				'twitter' => 'Twitter',
-				'google' => 'Google+',
-				'linkedin' => 'Linkedin',
-				'tumblr' => 'Tumblr',
-				'email' => 'Email',
-				'pinterest' => 'Pinterest',
-				'reddit' => 'Reddit',
-				'xing' => 'Xing',
-				'whatsapp' => 'Whatsapp',
-				'vk' => 'Vk',
-				'telegram' => 'Telegram',
+				'facebook' => __( 'Facebook', 'wp_admin_style' ),
+				'twitter' => __( 'Twitter', 'wp_admin_style' ),
+				'google' => __( 'Google+', 'wp_admin_style' ),
+				'linkedin' => __( 'Linkedin', 'wp_admin_style' ),
+				'tumblr' => __( 'Tumblr', 'wp_admin_style' ),
+				'email' => __( 'Email', 'wp_admin_style' ),
+				'pinterest' => __( 'Pinterest', 'wp_admin_style' ),
+				'reddit' => __( 'Reddit', 'wp_admin_style' ),
+				'xing' => __( 'Xing', 'wp_admin_style' ),
+				'whatsapp' => __( 'Whatsapp (Mobile only)', 'wp_admin_style' ),
+				'vk' => __( 'Vk', 'wp_admin_style' ),
+				'telegram' => __( 'Telegram', 'wp_admin_style' ),
 			),
 			'default' => array(),
 		),
