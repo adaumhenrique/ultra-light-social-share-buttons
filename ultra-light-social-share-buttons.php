@@ -3,7 +3,7 @@
  * Plugin Name: Ultra Light Social Share Buttons
  * Plugin URI: https://github.com/adaumhenrique/ultra-light-social-share-buttons
  * Description: Displays social share buttons on your posts. No JavaScript required, no images required, this plugin uses SVG.
- * Version: 1.0
+ * Version: 1.1
  * Author: Adam Silva
  * Author URI: http://www.f5themes.com
  * License GPLv2 or Later
@@ -127,7 +127,6 @@ register_activation_hook( __FILE__, 'ultralight_set_defaults' );
 
 function ultralight_show_buttons_post( $post ) {
 	global $content;
-
 	$buttons = get_option( 'ultralight_buttons' );
 
 	if ( isset( $buttons ) && ! empty( $buttons ) && is_array( $buttons ) ) {
@@ -135,7 +134,7 @@ function ultralight_show_buttons_post( $post ) {
 		$post_url = get_the_permalink();
 		$post_title = get_the_title();
 
-		if ( is_single() ) {
+		if ( is_single() && ( in_the_loop() ) ) {
 			require_once( 'includes/social-buttons.php' );
 			foreach ( $buttons as $button ) {
 				$content .= ultralight_display_buttons( $button, $post_url, $post_title );
