@@ -26,7 +26,7 @@ add_action( 'admin_menu', 'ultralight_menu' );
 
 function ultralight_options_page() {
 	if ( ! current_user_can( 'manage_options' ) ) {
-		wp_die( esc_attr__( 'You do not have sufficiente permissions to access this page.', 'wp_admin_style' ) );
+		wp_die( esc_attr__( 'You do not have sufficient permissions to access this page.', 'wp_admin_style' ) );
 	}
 
 	require_once( 'includes/options-page-wrapper.php' );
