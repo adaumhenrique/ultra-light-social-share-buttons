@@ -1,9 +1,9 @@
 === Ultra Light Social Share Buttons ===
-Contributors: Adam Silva
+Contributors: Adam Silva, F5 Themes
 Tags: facebook share, social share, social sharing, social sharing buttons, ultra light social share buttons, ultra light, twitter share, google+ share, linkedin share, whatsapp share, facebook button, share buttons
 Requires at least: 3.1
 Tested up to: 4.7
-Stable tag: 1.1
+Stable tag: 1.2
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -62,6 +62,13 @@ Choose in which place of the blog post you want to display the social share butt
 
 Default: Top
 
+**Show Buttons on:**
+Choose in which template pages you want to display the social share buttons
+
+* Posts: Adds the social buttons on single posts.
+* Blog Loop: Adds the social buttons on each post of the blog loop.
+* Pages: Adds the social buttons on pages.
+
 **Disable / Enable Social Buttons**
 Choose which social share buttons you want to display on your blog posts
 
@@ -85,7 +92,12 @@ Defaults: Facebook, Twitter, Google+ and Linkedin
 
 * Corrected a bug that was causing the buttons to be doubled in some cases.
 
+= 1.2 =
+
+* Added an option to choose which pages you want to display the social buttons. Posts, Blog loop or Pages.
+* Changed button class names to avoid ad blockers
+
 == Upgrade Notice ==
 
-= 1.1 =
-* Corrected a bug that was causing the buttons to be doubled in some cases.
+= 1.2 =
+* Added an option to choose which pages you want to display the social buttons. Posts, Blog loop or Pages.

@@ -3,8 +3,8 @@
  * Plugin Name: Ultra Light Social Share Buttons
  * Plugin URI: https://github.com/adaumhenrique/ultra-light-social-share-buttons
  * Description: Displays social share buttons on your posts. No JavaScript required, no images required, this plugin uses SVG.
- * Version: 1.1
- * Author: Adam Silva
+ * Version: 1.2
+ * Author: F5 Themes
  * Author URI: http://www.f5themes.com
  * License GPLv2 or Later
  * License URI: https://www.gnu.org/licenses/gpl-2.0.html
@@ -60,6 +60,18 @@ function ultralight_setup_fields() {
 				'top' => __( 'Top', 'wp_admin_style' ),
 				'bot' => __( 'Bottom', 'wp_admin_style' ),
 				'both' => __( 'Both', 'wp_admin_style' ),
+			),
+			'default' => array(),
+		),
+		array(
+			'uid' => 'ultralight_place',
+			'label' => __( 'Show Buttons on', 'wp_admin_style' ),
+			'section' => 'ultralight_display_section',
+			'type' => 'checkbox',
+			'options' => array(
+				'posts' => __( 'Posts', 'wp_admin_style' ),
+				'blog' => __( 'Blog loop', 'wp_admin_style' ),
+				'pages' => __( 'Pages', 'wp_admin_style' ),
 			),
 			'default' => array(),
 		),
@@ -122,11 +134,16 @@ function ultralight_set_defaults() {
 
 	$position[0] = 'top';
 	update_option( 'ultralight_position', $position );
+
+	$place[0] = 'posts';
+	update_option( 'ultralight_place', $place );
 }
 register_activation_hook( __FILE__, 'ultralight_set_defaults' );
 
 function ultralight_show_buttons_post( $post ) {
 	global $content;
+	$content = '';
+
 	$buttons = get_option( 'ultralight_buttons' );
 
 	if ( isset( $buttons ) && ! empty( $buttons ) && is_array( $buttons ) ) {
@@ -134,7 +151,7 @@ function ultralight_show_buttons_post( $post ) {
 		$post_url = get_the_permalink();
 		$post_title = get_the_title();
 
-		if ( is_single() && ( in_the_loop() ) ) {
+		if ( in_the_loop() && is_main_query() ) {
 			require_once( 'includes/social-buttons.php' );
 			foreach ( $buttons as $button ) {
 				$content .= ultralight_display_buttons( $button, $post_url, $post_title );
@@ -142,21 +159,43 @@ function ultralight_show_buttons_post( $post ) {
 		}
 	}
 
+
 	$position = get_option( 'ultralight_position' );
+	$result = ultralight_set_placement( $content );
 
 	switch ( $position[0] ) {
 		case 'top' :
-			return $content . $post;
+			return $result . $post;
 		break;
 		case 'bot' :
-			return $post . $content;
+			return $post . $result;
 		break;
 		case 'both' :
-			return $content . $post . $content;
+			return $result . $post . $result;
 		break;
 	}
 }
 add_filter( 'the_content', 'ultralight_show_buttons_post' );
+
+function ultralight_set_placement( $content ) {
+
+	$place = get_option( 'ultralight_place' );
+
+	if ( isset( $place ) && ! empty( $place ) ) {
+		foreach ( $place as $placement ) {
+			if( ( 'posts' == $placement ) && ( is_single() ) ) {
+				return $content;
+			}
+			if( ( 'blog' == $placement ) && ( is_home() ) ) {
+				return $content;
+			}
+			if( ( 'pages' == $placement ) && ( is_page() ) ) {
+				return $content;
+			}
+		}
+	}
+
+}
 
 function ultralight_enqueue_styles() {
 	wp_enqueue_style( 'ultralight_css', plugins_url() . '/ultra-light-social-share-buttons/css/style.css' );
